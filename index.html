@@ -17,11 +17,11 @@
             <h1 class="title has-text-centered">
                 Weather App
             </h1>
-            <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="City Search">
-                <span class="icon is-small is-right">
-                <i class="fas fa-search-location"></i>
-                </span>
+            <div class="control is-narrow has-icons-right">
+                <input id="input" class="input" type="text" placeholder="City Search">
+                  <span class="icon is-small is-right">
+                    <input id="submit" class="fas fa-search-location"></input>
+                  </span>
             </div>
           </div>
         </div>
@@ -34,12 +34,33 @@
           <div id="city-cache" class="box" style="width: 200px;"></div>
         </div>
         <div class="column">
-          <div id="current-weather" class="box"></div>
+
+          <!-- Where the current weather is displayed -->
+          <div id="current" class="box tile is-ancestor">
+            <article class="tile is-child notification">
+              <p id="city-state" class="title"></p>
+              <div id="current-weather" class="content">
+                <!-- Content -->
+              </div>
+            </article>
+          </div>
+
+          <!-- where the forecast is displayed -->
+          <div id="forecast" class="box tile is-ancestor">
+            <div class="tile">
+              <!-- Add content or other tiles -->
+            </div>
+            <div class="tile">
+              <!-- Add content or other tiles -->
+            </div>
+          </div>
+
         </div>
       </div>
         
 
-   
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="assets/js/script.js"></script>
 </body>
