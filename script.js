@@ -2,34 +2,32 @@ var city = "";
 var cacheId = "";
 // weather location and current weather response from weatherapi
 var current = {};
-var location = {};
+var loc = {};
 
 // Listen for City Entry on change
-$(document).ready(function () {
 
-    // Listens for a chonge on the INPUT tags and logs it to LocalStorage
-    $("input").on("change", function(event){
-        event.preventDefault();
-        // set variable city to the input field
-        city = $(this).val();
-        cacheId = city.replace(/\s/g,'');
-        console.log("Search for ===== " + city)
-        prependCache(); 
-        getWeatherApi();
-    });
+$("input").on("change", function(event){
+    event.preventDefault();
+    // set variable city to the input field
+    city = $(this).val();
+    cacheId = city.replace(/\s/g,'');
+    console.log("Search for ===== " + city)
+    prependCache(); 
+    getWeatherApi();
+});
 
-    // log the city into cache
-    function prependCache() {
-        if (city !== "") {
+// log the city into cache
+function prependCache() {
+    if (city !== "") {
 
-            // create the element as child to div with id of city-cache
-            $("#city-cache").prepend('<p id="' + cacheId + '">');
+        // create the element as child to div with id of city-cache
+        $("#city-cache").prepend('<p id="' + cacheId + '">');
 
-            // render the city in the cache
-            $("#"+cacheId).text(city);
+        // render the city in the cache
+        $("#"+cacheId).text(city);
 
-        }
     }
+}
 
 function getWeatherApi() {
     // weatherapi apikey 132cab0e8fca4c42a8f204714202503
@@ -41,7 +39,7 @@ function getWeatherApi() {
       .then(function(response) {
         console.log("============= current weatherAPI results ==========");
         console.log(response);
-        location = response.location;
+        loc = response.location;
         current = response.current;
         render();
         });
@@ -54,8 +52,8 @@ function render() {
     $('#current').append($('<p id="cityState" class="title">'));
 
     // Render the City and State
-    $('#cityState').text(location.name + ", " + location.region);
-            console.log('render funct ==== ' + location.name + ", " + location.region);
+    $('#cityState').text(loc.name + ", " + loc.region);
+            console.log('render funct ==== ' + loc.name + ", " + loc.region);
 
     //Render current conditions
             console.log('render funct ==== ' + current.temp_f);
@@ -85,14 +83,15 @@ function render() {
     $('#current').append($('<p id="uv">'));
     $('#uv').html(current.uv);
     
-    // if(current.uv < 3) {
-    //     $('#uv').addClass('is-primary'); 
-    // } else if (current.uv >= 3 && current.uv < 6){
-    //     $('#uv').addClass('is-warning');
-    // } else if (current.uv >= 6 && current.uv < 8){
-    //     $('#uv').attr('style', 'background-color: orange;');
-    // } else {$('#uv').addClass('is-danger');}
+    if(current.uv < 3) {
+        $('#uv').addClass('is-primary'); 
+    } else if (current.uv >= 3 && current.uv < 6){
+        $('#uv').addClass('is-warning');
+    } else if (current.uv >= 6 && current.uv < 8){
+        $('#uv').attr('style', 'background-color: orange;');
+    } else {$('#uv').addClass('is-danger');}
 
 }
-});
+
+
 
