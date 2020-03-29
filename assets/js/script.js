@@ -1,63 +1,8 @@
-var city = "San Jose";
+var city = "";
 var cacheId = "";
-var currentWeatherEl = document.getElementById('current-weather');
-
-function getWeatherApi() {
-    // weatherapi apikey 132cab0e8fca4c42a8f204714202503
-    var queryurl = "https://api.weatherapi.com/v1/current.json?key=132cab0e8fca4c42a8f204714202503&q=" + city;
-    $.ajax ({
-        url: queryurl,
-        method: "GET"
-    })
-      .then(function(response) {
-        console.log("============= current weatherAPI results ==========");
-        console.log(response);
-        });
-        prependCache(city);
-}
-
-// log the city into cache
-function prependCache() {
-    if (city !== "") {
-        // Replace spaces with -
-        cacheId = city.replace(/\s/g, "-");
-        // create a <p> element for each cache
-        var $cityCache = $("<p>");
-        // give the <p> element an ID
-        $cityCache.attr("id", cacheId);
-        // create the element as child to div with id of city-cache
-        $("#city-cache").prepend($cityCache);
-
-        // render the city in the cache
-        $("#"+cacheId).text(city);
-
-    }
-}
-
-function setCacheLocStor() {
-
-
-}
-
-function getCacheLocStor() {
- 
-    // Populate the cache-id with stored data 
-    for (i = 0; i < 18; i++) {
-        
-        var timeData = localStorage.getItem(time);
-        if (timeData !== null) {
-            // console.log("LocalStorage Value for time: " + timeData);
-            document.getElementById(time).value = timeData;
-        }
-        var time = i + "30m";
-            // console.log("LocalStorage Time is: " + time);
-        var timeData = localStorage.getItem(time);
-        if (timeData !== null) {
-            // console.log("LocalStorage Value for time: " + timeData);
-            document.getElementById(time).value = timeData;
-        }
-    }
-}
+// weather location and current weather response from weatherapi
+var current = {};
+var location = {};
 
 // Listen for City Entry on change
 $(document).ready(function () {
@@ -67,11 +12,87 @@ $(document).ready(function () {
         event.preventDefault();
         // set variable city to the input field
         city = $(this).val();
-        cacheId = city.replace(/\s/g, "-");
-        console.log("cacheID is ==== " + cacheId);
-        console.log("city is =======" + city);
-        localStorage.setItem(cacheId, city);
+        cacheId = city.replace(/\s/g,'');
+        console.log("Search for ===== " + city)
+        prependCache(); 
+        getWeatherApi();
     });
 
+    // log the city into cache
+    function prependCache() {
+        if (city !== "") {
 
-getWeatherApi();
+            // create the element as child to div with id of city-cache
+            $("#city-cache").prepend('<p id="' + cacheId + '">');
+
+            // render the city in the cache
+            $("#"+cacheId).text(city);
+
+        }
+    }
+
+function getWeatherApi() {
+    // weatherapi apikey 132cab0e8fca4c42a8f204714202503
+    var queryurl = "https://api.weatherapi.com/v1/current.json?key=132cab0e8fca4c42a8f204714202503&q=" + city + ", United States of America";
+    $.ajax ({
+        url: queryurl,
+        method: "GET"
+    })
+      .then(function(response) {
+        console.log("============= current weatherAPI results ==========");
+        console.log(response);
+        location = response.location;
+        current = response.current;
+        render();
+        });
+}
+
+function render() {
+    // Clear current conditions rendered
+    $('#current').empty();
+
+    $('#current').append($('<p id="cityState" class="title">'));
+
+    // Render the City and State
+    $('#cityState').text(location.name + ", " + location.region);
+            console.log('render funct ==== ' + location.name + ", " + location.region);
+
+    //Render current conditions
+            console.log('render funct ==== ' + current.temp_f);
+
+    $('#current').append($('<p id="currentCondition" class="content">'));
+    // $('#currentCondIcon').append($('<img id="conditionIcon" SameSite="Secure">'));
+    $('#currentCondition').html(current.condition.text);
+
+    // Create the span and image icon for the current condition
+    $('#currentCondition').append($('<span id="curCondIcon">'));
+    $('#curCondIcon').append($('<img id="icon" SameSite="Secure">'));
+    $('#icon').attr("src", current.condition.icon);
+
+    // Render the Temperature and what it feels Like
+    $('#current').append($('<p id="tempF">'));
+    $('#tempF').html(current.temp_f + " <span>&#8457</span> " + "F feels like <strong>" + current.feelslike_f + " <span>&#8457</span></strong>");
+
+    // Render the Humidity
+    $('#current').append($('<p id="humidity>'));
+    $('#humidity').html(current.humidity);
+
+    // render the Wind Speed and Direction
+    $('#current').append($('<p id="wind">'));
+    $('#wind').html(current.wind_mph + " MPH with heading: " + current.wind_dir);
+
+    // Render the UV Index and background color
+    $('#current').append($('<p id="uv">'));
+    $('#uv').html(current.uv);
+    
+    // if(current.uv < 3) {
+    //     $('#uv').addClass('is-primary'); 
+    // } else if (current.uv >= 3 && current.uv < 6){
+    //     $('#uv').addClass('is-warning');
+    // } else if (current.uv >= 6 && current.uv < 8){
+    //     $('#uv').attr('style', 'background-color: orange;');
+    // } else {$('#uv').addClass('is-danger');}
+
+}
+});
+
