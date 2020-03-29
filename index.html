@@ -5,22 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <title>Weather Search</title>
     <!-- colors #F7F7F7   #7DA2A9 -->
 </head>
 <body>
-    <header class="header">Weather App</header>
     <section class="hero">
         <div class="hero-body">
+            <!-- Search Input -->
           <div class="container">
-            <h1 class="title">
-              Weather App
+            <h1 class="title has-text-centered">
+                Weather App
             </h1>
-            
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="City Search">
+                <span class="icon is-small is-right">
+                <i class="fas fa-search-location"></i>
+                </span>
+            </div>
           </div>
         </div>
       </section>
+    
+    <hr>
+
+    <div class="columns">
+        <div class="column is-narrow">
+          <div id="city-cache" class="box" style="width: 200px;"></div>
+        </div>
+        <div class="column">
+          <div id="current-weather" class="box"></div>
+        </div>
+      </div>
+        
 
    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
