@@ -1,3 +1,18 @@
 body {
     background-image: url("../images/spring-blooming-crabapple-trees.png");
+    height: 100%;
+}
+
+#cache {
+    padding-top: 0;
+}
+
+#uv {
+    width: 20px;
+    background-color: orangered;
+    text-align: center;
+}
+
+#city-cache {
+    width: 200px;
 }

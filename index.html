@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <title>Weather Search</title>
     <!-- colors #F7F7F7   #7DA2A9 -->
@@ -12,7 +12,6 @@
   <body>
     <section class="hero">
         <div class="hero-body">
-            <!-- Search Input -->
           <div class="container">
             <h1 class="title has-text-centered">
                 Weather App
@@ -27,25 +26,18 @@
         </div>
       </section>
     
-    <hr>
-
-    <div class="columns">
-        <div class="column is-narrow">
-          <div id="city-cache" class="box" style="width: 200px;"></div>
+    <div class="container">
+      <div class="columns">
+        <!-- Column is for the City Cache -->
+        <div id="cache" class="column is-narrow">
+          <div id="city-cache" class="box tile is-parent is-vertical" style="width: 200px;"></div>
         </div>
-        <div class="column">
 
+        <!-- Column is for the current city weather -->
+        <div class="column">
           <!-- Where the current weather is displayed -->
           <div class="box tile is-ancestor">
             <article id="current" class="tile is-child notification">
-              <!-- City, State current weather title goes here -->
-              <!-- <div id="currentWeather" class="content">
-                <p id="currentCondition">
-                  <span>
-                      <img id="currentConditionIcon" SameSite="Secure" src=""/>
-                  </span>
-                </p>
-              </div> -->
             </article>
           </div>
 
@@ -61,10 +53,11 @@
 
         </div>
       </div>
+    </div>
         
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="script.js"></script>
+    <script src="assets/js/script.js"></script>
 
   </body>
 </html>
