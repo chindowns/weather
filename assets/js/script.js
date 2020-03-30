@@ -9,22 +9,29 @@ var cityArr = [];
 // Listen for City Entry on change
 $("input").on('change', function(event){
     event.preventDefault();
+    
+    if ($(this).attr("class") === "input") {
+        // set global variable city to the input field
+        city = $(this).val();
 
-    // set global variable city to the input field
-    city = $(this).val();
-
-    console.log("Search for ===== " + city)
-    manageCityArr(); 
-    getWeatherApi();
+        console.log("Search for ===== " + city)
+        manageCityArr(); 
+        getWeatherApi();
+    }
 });
 
-if (cityBtn !== null) {
-    cityBtn.addEventListner('click',function() {
+// if (cityBtn !== null) {
+$(document).on('click',".button", function (event) {
+    event.preventDefault();
+    console.log($(this));
+    // if($(this).attr("class") === "button") {
         city = $(this).val();
         manageCityArr();
         getWeatherApi();
-    });
-} else {console.log("cityBtn is null");}
+    // }
+    
+// } else {console.log("cityBtn is null");}
+});
 
 // log the city into cache
 function manageCityArr() {
@@ -44,7 +51,12 @@ function manageCityArr() {
     console.log("= cityArr from appendCache funct =");
     console.log(cityArr);
     }
+    renderCache();
+    storeCities(); 
+}
 
+// \\ Displays the last 10 cities searched
+function renderCache() {
     for (var i = 0; i < cityArr.length; i++) {
         // clears the cache
         if (i === 0) {
@@ -55,8 +67,6 @@ function manageCityArr() {
         $('#'+i).attr("value", cityArr[i]);
         console.log("each city cached ==== " + cityArr[i]);
     }
-
-    storeCities();        
 }
 
 function storeCities() {
@@ -68,7 +78,7 @@ function updateCities() {
     // get cities from localStorage and write it into the cities Array
     cityArr = [];
     cityArr = JSON.parse(localStorage.getItem('cities'));
-    manageCityArr();
+    renderCache();
 }
 
 function getWeatherApi() {
