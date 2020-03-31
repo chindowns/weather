@@ -1,4 +1,3 @@
-var cityBtn = document.querySelector('button');
 var city = "";
 
 // weather location and current weather response from weatherapi
@@ -13,18 +12,17 @@ $("input").on('change', function(event){
     if ($(this).attr("class") === "input") {
         // set global variable city to the input field
         city = $(this).val();
-
-        console.log("Search for ===== " + city)
+        // Call manageCityArr to store to search criteria to localStore and render to the cityCache
         manageCityArr(); 
+        // gets the weather filtered for the search criteria
         getWeatherApi();
     }
 });
 
-// if (cityBtn !== null) {
 $(document).on('click',".button", function (event) {
     event.preventDefault();
-    console.log($(this));
         city = $(this).val();
+
         getWeatherApi();
 });
 
@@ -50,7 +48,7 @@ function manageCityArr() {
     storeCities();
 }
 
-// \\ Displays the last 10 cities searched
+// Displays the last 10 cities searched
 function renderCache() {
     for (var i = 0; i < cityArr.length; i++) {
         // clears the cache
@@ -69,23 +67,30 @@ function storeCities() {
     localStorage.setItem('cities', JSON.stringify(cityArr));
 }
 
-function updateCities() {
+function updateCities(init) {
     // get cities from localStorage and write it into the cities Array
     cityArr = [];
     cityArr = JSON.parse(localStorage.getItem('cities'));
+    // if init = "init", set City to cityArr[0]
+    if(init === "init") {
+        city = cityArr[0];
+        // get the weather for the last city visited and render it.
+        getWeatherApi();
+    }
+    // Display on the screen in the button area
     renderCache();
 }
 
 function getWeatherApi() {
-    // weatherapi apikey 132cab0e8fca4c42a8f204714202503
+    // API Query for the weather filtering for the United States.
     var queryURL = "https://api.weatherapi.com/v1/forecast.json?key=132cab0e8fca4c42a8f204714202503&q="+city+",United States of America&days=5";
     $.ajax ({
         url: queryURL,
         method: "GET"
     })
       .then(function(response) {
-        console.log("============= current weatherAPI results ==========");
-        console.log(response);
+        // console.log("============= current weatherAPI results ==========");
+        // console.log(response);
         loc = response.location;
         current = response.current;
         render();
@@ -192,4 +197,4 @@ formatedDate = function(strDate) {
 
 }
 
-updateCities();
+updateCities("init");
