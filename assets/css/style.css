@@ -5,6 +5,19 @@ body {
     background-size:  cover;
 }
 
+#input{
+    float: left;
+    position: absolute;
+    z-index: 1;
+}
+
+#submit {
+    float: right;
+    position: relative;
+    z-index: 2;
+    margin: 12px;
+}
+
 #cache {
     padding-top: 0;
 }

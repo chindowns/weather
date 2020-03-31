@@ -1,7 +1,7 @@
 # Weather
 The Weather App is a weather dashboard with clean, polished, responsive, friendly and pleasing weather dashboard that utilizes weatherapi.com as the 3rd party API providing access to all the cities around the world.
 
-The site utilizes a search bar where the user can type in their city search and click out of the input field, or hit enter or tab to pull the data for a city filtered in the United States.  Searching for cities by country, region and zip code will be added at a later date.
+The site utilizes a search bar where the user can type in their city search and click on the search icon, hit enter or tab to pull the data for a city filtered in the United States.  Searching for cities by country, region and zip code will be added at a later date.
 
 Your weather dashboard also provides a list of your 10 most recently visited cities so the user can easily click on a past visited city to pull up the data.
 
