@@ -24,13 +24,8 @@ $("input").on('change', function(event){
 $(document).on('click',".button", function (event) {
     event.preventDefault();
     console.log($(this));
-    // if($(this).attr("class") === "button") {
         city = $(this).val();
-        manageCityArr();
         getWeatherApi();
-    // }
-    
-// } else {console.log("cityBtn is null");}
 });
 
 // log the city into cache
@@ -52,7 +47,7 @@ function manageCityArr() {
     console.log(cityArr);
     }
     renderCache();
-    storeCities(); 
+    storeCities();
 }
 
 // \\ Displays the last 10 cities searched
@@ -94,6 +89,7 @@ function getWeatherApi() {
         loc = response.location;
         current = response.current;
         render();
+        renderForecast(response.forecast);
         });
 }
 
@@ -124,19 +120,19 @@ function render() {
 
     // Render the Temperature and what it feels Like
     $('#current').append($('<p id="tempF">'));
-    $('#tempF').html(current.temp_f + " <span>&#8457</span> " + "F feels like <strong>" + current.feelslike_f + " <span>&#8457</span></strong>");
+    $('#tempF').html(current.temp_f + " <span>&#8457</span> " + " feels like  <strong>" + current.feelslike_f + " <span>&#8457</span></strong>");
 
     // Render the Humidity
-    $('#current').append($('<p id="humidity>'));
-    $('#humidity').html(current.humidity);
+    $('#current').append($('<p id="humidity">'));
+    $('#humidity').html("Humidity is: " + current.humidity + "%");
 
     // render the Wind Speed and Direction
     $('#current').append($('<p id="wind">'));
-    $('#wind').html(current.wind_mph + " MPH with heading: " + current.wind_dir);
+    $('#wind').html("Wind is " + current.wind_mph + " MPH with heading of " + current.wind_dir);
 
     // Render the UV Index and background color
     $('#current').append($('<p id="uv">'));
-    $('#uv').html(current.uv);
+    $('#uv').html("UV " + current.uv);
     console.log(typeof(current.uv) + " UV is ====== " + current.uv);
 
     if(current.uv < 3) {
@@ -146,6 +142,53 @@ function render() {
     } else if (current.uv >= 6 && current.uv < 8){
         $('#uv').attr('style', 'background-color: #ff4500;');
     } else {$('#uv').addClass('is-danger');}
+
+}
+
+function renderForecast(obj) {
+    $('#forecast-div').empty();
+    var forecast = obj.forecastday;
+    
+    console.log(forecast);
+    // iterate through each object in the forecast array
+    for (var i = 0; i < forecast.length; i++) {
+        var date = formatedDate(forecast[i].date);
+        console.log('Forecast Date is a ' + typeof(date) + ' === ' + date);
+        // Create the tile (card) for each of the forecast days
+        $('#forecast-div').append('<article id="forecast-'+i+'" class="box">');
+
+        // Add the Date to each tile
+        $('#forecast-'+i).append('<p id="fcDate-'+i+'" class="title">');
+        $('#fcDate-'+i).text(date);
+
+        // Add the forecasted condition
+        var fcIcon = forecast[i].day.condition.icon;
+        if(fcIcon.indexOf(":") === -1) {
+            fcIcon = "https:" + fcIcon;
+        }
+        $('#forecast-'+i).append('<p id="fcCond-'+i+'" class="">');
+        $('#fcCond-'+i).html(forecast[i].day.condition.text);
+        $('#forecast-'+i).append('<img width="" id="fcIcon-'+i+'" src="'+fcIcon+'">');
+
+        $('#forecast-'+i).append('<p id="fcTemp-'+i+'">');
+        $('#fcTemp-'+i).html("Temp " + forecast[i].day.avgtemp_f + " <span>&#8457</span>");
+
+        $('#forecast-'+i).append('<p id="fcHumidity-'+i+'">');
+        $('#fcHumidity-'+i).html("Humidity " + forecast[i].day.avghumidity);
+
+    }
+}
+
+formatedDate = function(strDate) {
+    var monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Aug", "Nov", "Dec"];
+    var date = strDate.slice(5).split('-');
+    console.log(date);
+    var i = parseInt(date[0]);
+    var month = monthArr[i];
+    console.log(month);
+    console.log(date[1]);
+    var strDate = month + " " + date[1];
+    return strDate;
 
 }
 

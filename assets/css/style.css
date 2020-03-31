@@ -1,6 +1,8 @@
 body {
-    background-image: url("../images/spring-blooming-crabapple-trees.png");
-    height: 100%;
+    background-image: url(../images/spring-blooming-crabapple-trees.png);
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-size:  cover;
 }
 
 #cache {
@@ -8,11 +10,16 @@ body {
 }
 
 #uv {
-    width: 20px;
+    width: 50px;
     background-color: orangered;
     text-align: center;
 }
 
 #city-cache {
     width: 200px;
+}
+
+#forecast-1, #forecast-2, #forecast-3, #forecast-4, #forecast-0 {
+    margin: 3px;
+    background-color: lightskyblue;
 }
