@@ -1,4 +1,6 @@
 # Weather
+https://chindowns.github.io/weather
+
 The Weather App is a weather dashboard with clean, polished, responsive, friendly and pleasing weather dashboard that utilizes weatherapi.com as the 3rd party API providing access to all the cities around the world.
 
 The site utilizes a search bar where the user can type in their city search and click on the search icon, hit enter or tab to pull the data for a city filtered in the United States.  Searching for cities by country, region and zip code will be added at a later date.
@@ -105,8 +107,8 @@ function renderForecast(obj) {
 
 ## Author Links
 ### Michael Downs
+<img src="https://avatars3.githubusercontent.com/u/61262454?v=4" alt = "Michael's avatar" style = "width: 40px; border-radius: 15px;"/>   [GitHub](https://github.com/chindowns) Michael Downs 
 [LinkedIn](http://www.linkedin.com/in/michaeldownssj)  
-[GitHub](https://chindowns.github.io/) 
 
 ### Sources
 public-domain-photos.com provideds the background image
